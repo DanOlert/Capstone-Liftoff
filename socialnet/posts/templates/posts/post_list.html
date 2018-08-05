@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <h1>Posts</h1>
-  </body>
-</html>
+{% extends 'base_layout.html'%}
+
+{% block content%}
+
+<h1>Posts</h1>
+  <div class="posts">
+    {% if user.is_authenticated %}
+      <div class="post">
+          <h3><a href="{% url 'posts:new' %}">New Post...</a></h3>
+      </div>
+    {% endif %}
+    {% if posts %} <!-- Are there any posts?-->
+      {% for post in posts %}
+        <div class="post">
+          <!-- dynamically formats the anchor url to be the post's "slug"-->
+          <h3><a href="{% url 'posts:detail' slug=post.slug %}">{{post.title}}</a></h3>
+            {% if post.body|length < 111 %}
+              <p>{{post.body}}</p>
+            {% else %}
+            <!-- TODO make elipses grey -->
+            <!-- TODO if possible, clicking on elipses should expand post in page -->
+              <p>{{post.snippet}}<a href="#">  . . . </a></p>
+            {%endif%}
+          <p>Posted by {{post.author}} on {{post.date}}</p>
+        <div>
+      {% endfor %}
+    {% else %}
+      <h4 class='no_results'>No Posts Here</h4>
+    {% endif %}
+  <div>
+
+{% endblock %}

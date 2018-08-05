@@ -1,0 +1,41 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Posts</title>
+<link rel="stylesheet" href="{% static 'styles.css'%}"
+  </head>
+  <body>
+    <header class='wrapper'>
+      <h1><a href="{% url 'home' %}"><img src="{% static "main_logo.png"%}"></a></h1>
+      <nav>
+        <ui>
+          {% if user.is_authenticated %}
+            <form class="logout-link" action="/user/logout/" method='post'>
+              {% csrf_token %}
+              <button type="submit">Log Out</Button>
+            </form>
+          {% else %}
+            <form class="login-link" action="/user/login/" method='post'>
+              {% csrf_token %}
+              <button type="submit">Log In</Button>
+            </form>
+            <form class="signup-link" action="/user/signup/" method='post'>
+              {% csrf_token %}
+              <button type="submit">Join</Button>
+            </form>
+          {% endif %}
+        </ui>
+      </nav>
+    </header>
+    <div class="wrapper">
+
+
+      {% block content %}
+
+      {% endblock %}
+    </div>
+  </body>
+</html>
