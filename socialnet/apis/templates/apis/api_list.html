@@ -1,13 +1,26 @@
-{% extends 'base_layout.html'%}
+{% extends 'settings_layout.html'%}
 
 {% block content%}
 <h2>Manage login of external streaming sites here</h2>
-  <!-- <div class="new_post">
-    <h2>
-      <form class='site-form' action='/posts/new/' method='post' enctype='multipart/form-data'>
-        {% csrf_token %}
-        {{ form }}
-        <input type='submit' value='Post'>
-      </form>
-  </div> -->
+<div class="api-list">
+  <div class="api">
+    <!-- TODO LINK bellow should go to settings:soundcloud rather than api:soundcloud-->
+    <h2>Soundcloud</h2>
+    <p><a href="{% url 'apis:spotify' %}">Soundcloud Settings</a></p>
+    <form class='site-form' action='/apis/soundcloud/' method='post'>
+      {% csrf_token %}
+      <input type='submit' value='Refresh'>
+      <p>login status: </p><!--TODO show login status if possible-->
+    </form>
+
+    <h2>Spotify</p>
+    <p><a href="{% url 'apis:spotify' %}">Spotify Settings</a></p>
+    <form class='site-form' action='/apis/spotify/' method='post'>
+      {% csrf_token %}
+      <input type='submit' value='Refresh'>
+      <p>login status: </p><!--TODO show login status if possible-->
+    </form>
+
+  </div>
+</div>
 {% endblock %}

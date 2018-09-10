@@ -4,7 +4,7 @@ import sys
 import spotipy
 import spotipy.util as util
 
-def CONSEOLE_show_tracks(tracks):
+def CONSOLE_show_tracks(tracks):
     for i, item in enumerate(tracks['items']):
         track = item['track']
         print ("   %d %32.32s %s" % (i, track['artists'][0]['name'],
@@ -21,7 +21,7 @@ if __name__ == '__main__':
         username = sys.argv[1]
     else:
         print ("Whoops, need your username!")
-        print ("usage: python -c 'import spotipy.py [username]'")
+        print ("usage: python spotipy_functions.py [username]")
         sys.exit()
 
     token = util.prompt_for_user_token(username)
@@ -37,7 +37,7 @@ if __name__ == '__main__':
                 results = sp.user_playlist(username, playlist['id'],
                     fields="tracks,next")
                 tracks = results['tracks']
-                CONSELE_show_tracks(tracks)
+                CONSOLE_show_tracks(tracks)
                 while tracks['next']:
                     tracks = sp.next(tracks)
                     show_tracks(tracks)
@@ -47,3 +47,7 @@ if __name__ == '__main__':
 def show_spotify_playlist(playlist_id):
 
     return(" ")
+
+def show_spotify_user():
+    user = spotifyObject().current_user()
+    return user['display_name']

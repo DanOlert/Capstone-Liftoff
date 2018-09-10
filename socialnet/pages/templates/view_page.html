@@ -4,6 +4,16 @@
 
 {% load static from staticfiles %}
 
+<div class="page-wrapper">
+  <div class="page-view">
+    <div class="page-title"><h2>{{page.title}}</h2></div>
+    <div class= "page-image"><img src="/media/{{page.photo}}" alt="User Picture" height="200" width="200"></div>
+    <div class="page-description"><p>{{page.description}}</p></div>
+  </div>
+</div>
+
+<!-- NOTE: this is the posts section of the page, displaying posts to this page -->
+
 <div class="posts-wrapper">
   <div class="posts-header">
     <h1 >Posts</h1>
@@ -11,12 +21,12 @@
   </div>
   <!-- NOTE we dont require authentication for viewing posts except for private posts {% if user.is_authenticated %} -->
     <div class="newpost">
-      <button class="collapsible-toggle">New Post...</button>
+      <button class="collapsible-toggle">Post to {{page.title}}...</button>
       <div class="newpost-collapsible">
         <!-- TODO format this as a grid -->
-        <form class='site-form' action='/posts/' method='post' enctype='multipart/form-data'>
+        <form class='site-form' action='/user/{{page.slug}}/' method='post' enctype='multipart/form-data'>
           {% csrf_token %}
-          {{ form }} <!-- TODO get this formatted omb-->
+          {{ form }} <!-- TODO get this css grid formatted-->
           <div class="form-submit" style="margin-left: 0px; border-top: none;">
             <input type='submit' value='Post'>
           </div>
@@ -37,15 +47,15 @@
             <!-- TODO if possible, clicking on elipses should expand post in page -->
               <p>{{post.snippet}}<a href="#">  . . . </a></p>
             {%endif%}
-          <p class="post-info">Posted by <a class="footnote-link" href="{% url 'user:view' slug=post.authorslug %}">{{post.author}}</a>
-            {% if post.page %}
-            <!--TODO once groups are added make this href detect whether its a user or group-->
-              to <a class="footnote-link" href="{% url 'user:view' slug=post.page.slug %}">{{post.page}}</a>
-            {% else %}
-              to All
-            {% endif %}
-            on {{post.date}}
-          </p>
+            <p class="post-info">Posted by <a class="footnote-link" href="{% url 'user:view' slug=post.authorslug %}">{{post.author}}</a>
+              {% if post.page %}
+              <!--TODO once groups are added make this href detect whether its a user or group-->
+                to <a class="footnote-link" href="{% url 'user:view' slug=post.page.slug %}">{{post.page}}</a>
+              {% else %}
+                to All
+              {% endif %}
+              on {{post.date}}
+            </p>
           <div class='post-divide'></div>
         </div>
       {% endfor %}

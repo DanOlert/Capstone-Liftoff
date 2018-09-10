@@ -1,0 +1,8 @@
+{% extends 'base_layout.html'%}
+
+{% block content%}
+<div class="page-wrapper">
+  <div "no-page">You have no page. Click <a class="footnote-link" href="{% url 'user:edit' %}">here</a> to make one</div>
+  <!-- TODO: If this user is logged in, include "make page" option -->
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base_layout.html'%}
+
+{% block content%}
+{{ form.errors }}
+<div class="page-wrapper">
+  <form class='site-form' action='/user/edit-my-page/' method='post' enctype='multipart/form-data'>
+    {% csrf_token %}
+    <!-- TODO: add javazcript to make the text feilds autofill with user's old page info-->
+    <div class="edit-page">
+      <div class="page-title">
+        <h2>Title:</h2>
+      </div>
+      <div class="page-title-enter">
+        {{ form.title }}
+      </div>
+      <div class="page-description">
+        <h4>About:</h4>
+      </div>
+      <div class="page-description-enter">
+        {{ form.description }}
+      </div>
+      <div class="page-image">
+        <div class="change-image">
+          Change Image: {{ form.photo }}
+        </div>
+      </div>
+      <!-- TODO: add javazcript to make the picture show up-->
+    </div>
+    <div class="form-submit">
+      <input type='submit' value='Save'>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

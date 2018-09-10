@@ -15,16 +15,17 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Post',
+            name='Page',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=100)),
                 ('slug', models.SlugField(unique=True)),
-                ('type', models.CharField(choices=[('general', 'General'), ('recommend me', 'Recommend to Me!'), ('recommendation', 'Listen to This'), ('shows', 'Live Shows'), ('personal', 'Personal'), ('new music', 'Made This!')], default='general', max_length=20)),
-                ('body', models.TextField(max_length=2000)),
+                ('type', models.CharField(blank=True, max_length=20)),
+                ('description', models.TextField(blank=True, max_length=2000)),
+                ('listening', models.CharField(blank=True, max_length=200)),
                 ('date', models.DateTimeField(auto_now_add=True)),
-                ('authorslug', models.CharField(default='missing', max_length=500)),
-                ('author', models.ForeignKey(default=None, on_delete=django.db.models.deletion.SET_DEFAULT, to=settings.AUTH_USER_MODEL)),
+                ('photo', models.ImageField(blank=True, default='default.png', upload_to='')),
+                ('owner', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

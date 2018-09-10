@@ -9,7 +9,10 @@ class NewPost(forms.ModelForm):
         model = models.Post
         fields = [
             'title',
+            'type',
             'body',
+            'type',
+            'privacy',
             ]
 
     # def save(self):

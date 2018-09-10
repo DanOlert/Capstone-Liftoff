@@ -2,24 +2,37 @@ import os
 import sys
 import json
 import spotipy
+import webbrowser
 import spotipy.util as util
 from json.decoder import JSONDecodeError
 
-username = sys.argv[1]
+
 
 # User ID: 1246393108?si=rfxxo5j8RT2pDGD_TJEbaA (is the get request included? I dont think so)
 # Client ID: 284e9c8ac07046ac9e1443a4ab3bb4df (check spotify if changed)
 
 # Erase cache and prompt user permisions
+
+
 scope = 'user-library-read'
 
-if len(sys.argv) > 1:
-    username = sys.argv[1]
-else:
-    print ("Please enter username as second arguement.")
-    sys.exit()
+#NOTE Use this if User ID is not supplied
+# username = sys.argv[1]
+#
+# if len(sys.argv) > 1:
+#     username = sys.argv[1]
+# else:
+#     print ("Please enter username as second arguement.")
+#     sys.exit()
 
-token = util.prompt_for_user_token(username, scope)
+username = '1246393108'
+
+try:
+    token = util.prompt_for_user_token(username, scope)
+except:
+    os.remove(f".cashe-{username}")
+    token = util.prompt_for_user_token(username, scope)
+
 
 #spotify Object
 spotifyObject = spotipy.Spotify(auth=token)

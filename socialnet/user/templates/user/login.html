@@ -2,16 +2,20 @@
 
 {% block content%}
 
-<h2>Log In</h2>
+<div class="form-format">
+  <h2 class="form-title">Log In</h2>
 <!--TODO decide if i should do action url like this or like in signups.html-->
-<form class="site-form" action="/user/login/" method="post">
-  {% csrf_token %}
-  {{ form }}
-  <!-- TODO use similar get requests to redirect properly after trying to view a page that requires login-->
-  {% if request.GET.next %}
-    <input type="hidden" name="next" value="{{ request.GET.next}}">
-  {% endif %}
-  <input type = "submit" value = "Log In">
-</form>
+  <form class="site-form" action="/user/login/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <!-- TODO use similar get requests to redirect properly after trying to view a page that requires login-->
+    {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{ request.GET.next}}">
+    {% endif %}
+    <div class="form-submit">
+      <input type = "submit" value = "Log In">
+    </div>
+  </form>
+</div>
 
 {% endblock %}

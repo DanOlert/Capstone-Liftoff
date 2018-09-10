@@ -1,52 +1,34 @@
 {% load static from staticfiles %}
 
 <!DOCTYPE html>
-
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>SocialNet</title>
+    <title>Posts</title>
 <link rel="stylesheet" href="{% static 'styles.css'%}"
   </head>
   <body>
     <div class='toolbar-wrapper'>
       <header>
-        <h1 class="logo"><a href="{% url 'home' %}"><img src="{% static "main_logo.png"%}"></a></h1>
-        <!--TODO make the nave apear side by side rather than stacked-->
-        <!--TODO add a user icon that links to user's page if logged in, in line with these-->
+        <h1><a href="{% url 'home' %}"><img src="{% static "main_logo.png"%}"></a></h1>
         <nav>
-        <ul>
-          {% if user.is_authenticated %}
-            <li>
-              <a href="{% url 'user:mypage' %}"><p>user link</p></a>
-            </li>
-            <li class="nav1">
+          <ui>
+            {% if user.is_authenticated %}
               <form class="logout-link" action="/user/logout/" method='post'>
                 {% csrf_token %}
                 <button type="submit">Log Out</Button>
               </form>
-            </li>
-            <li class="nav2">
-              <form class="settings-link" action="" method='post'>
-                {% csrf_token %}
-                <button type="submit">Settings</Button>
-              </form>
-            </li>
-          {% else %}
-            <li class="nav1">
+            {% else %}
               <form class="login-link" action="/user/login/" method='post'>
                 {% csrf_token %}
                 <button type="submit">Log In</Button>
               </form>
-            </li>
-            <li class="nav2">
               <form class="signup-link" action="/user/signup/" method='post'>
                 {% csrf_token %}
                 <button type="submit">Join</Button>
               </form>
-            </li>
-          {% endif %}
-        </ul>
+            {% endif %}
+          </ui>
         </nav>
       </header>
     </div>
