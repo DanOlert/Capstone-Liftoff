@@ -10,4 +10,5 @@ class EditPage(forms.ModelForm):
             'title',
             'description',
             'photo',
+            'featured',
             ]

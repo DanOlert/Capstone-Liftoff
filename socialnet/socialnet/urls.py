@@ -13,6 +13,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls')),
+    path('project/', include('project.urls')),
     path('user/', include('user.urls')),
     path('apis/', include('apis.urls')),
     path('about/', views.about),

@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name="logout"),
     path('edit-my-page/', views.edit_my_page, name="edit"),
     path('my_page/', views.my_page, name="mypage"),
-    #NOTE: has to be last:
-    url(r'^(?P<slug>[\w-]+)/$',views.page_view, name="view"),
+    path('<slug>/', views.page_view, name="view"),
+    path('<slug>/projects/', views.page_view_projects, name="projects"),
+
 ]

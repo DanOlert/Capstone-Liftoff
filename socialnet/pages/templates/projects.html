@@ -1,0 +1,30 @@
+{% extends 'base_layout.html'%}
+
+{% block content%}
+
+{% load static from staticfiles %}
+
+<div class="page-wrapper">
+
+  <div class="posts-header">
+    <h1>{{page.owner|capfirst}}'s Projects</h1>
+    <div class='post-divide'></div>
+  </div>
+
+  <div class="newpost">
+    {% if user.is_authenticated%}
+      {%if request.user.id == page.owner.id %}
+      <button class="collapsible-toggle">New Project...</button>
+      {% else %}
+      <button class="collapsible-toggle">Request Collaboration...</button>
+      {% endif %}
+    {% else %}
+    <p style="color: #b0c4de"><a href="/user/login/" method='post'>Login</a> or <a href="/user/signup/" method='post'>Register</a> to Start New Project</p>
+    {% endif %}
+    <div class='post-divide'></div>
+  </div>
+
+
+</div>
+
+{% endblock %}

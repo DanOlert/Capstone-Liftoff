@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.utils.text import slugify
+from django.db.models import Q
 
 from .models import UserSettings
 
@@ -55,14 +56,8 @@ def logout_view(request):
         return redirect('/posts/')
 
 @login_required(login_url="/user/login/")
-def my_page(request):
-    slug = slugify(request.user.username + "-" + str(request.user.id))
-    return redirect('user:view', slug=slug)
-
-@login_required(login_url="/user/login/")
 def edit_my_page(request):
     current_user = request.user
- #TODO once pages exist, redirect to the page that the post is being made to
     if request.method == 'POST':
         form = formsPages.EditPage(request.POST) #if file upload, add feild "request.FILES"
         if form.is_valid:
@@ -77,13 +72,16 @@ def edit_my_page(request):
         if Page.objects.filter(slug=slugify(current_user.username + "-" + str(current_user.id))).exists():
             page = Page.objects.get(slug=slugify(current_user.username + "-" + str(current_user.id)))
             form = formsPages.EditPage()
-            #TODO This form should include the saved stuff from this user
-            #NOTE: Using javazcript for this probs will be best
             return render(request, 'edit_page.html', {'form':form, 'current_user':current_user, 'page':page})
         else:
             form = formsPages.EditPage()
 
     return render(request, 'edit_page.html', {'form':form, 'current_user':current_user})
+
+@login_required(login_url="/user/login/")
+def my_page(request):
+    slug = slugify(request.user.username + "-" + str(request.user.id))
+    return redirect('user:view', slug=slug)
 
 def page_view(request, slug):
     if Page.objects.filter(slug=slug).exists():
@@ -99,7 +97,7 @@ def page_view(request, slug):
                 instance.save()
         else:
             form = formsPosts.NewPost()
-        posts = Post.objects.all().order_by('-date')[:11]
+        posts = Post.objects.filter(Q(page=page) | Q(author=page.owner)).order_by('-date')[:11]
     else:
         if slug==slugify(request.user.username + "-" + str(request.user.id)):
             return render(request, 'you_have_no_page.html')
@@ -107,6 +105,17 @@ def page_view(request, slug):
         return render(request, 'no_page.html')
 
     return render(request, 'view_page.html', {'page': page, 'posts': posts, 'form':form})
+
+def page_view_projects(request, slug):
+    if Page.objects.filter(slug=slug).exists():
+        page = Page.objects.get(slug=slug)
+    else:
+        if slug==slugify(request.user.username + "-" + str(request.user.id)):
+            return render(request, 'you_have_no_page.html')
+
+        return render(request, 'no_page.html')
+
+    return render(request, 'projects.html', {'page': page})
 
 
     # if Page.objects.filter(slug=(slugify(str(request.user.id) + '17'))).exists():

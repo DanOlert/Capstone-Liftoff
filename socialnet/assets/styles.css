@@ -46,6 +46,11 @@ a:hover {
 
 }
 
+.logo img.resize {
+		height: 100px;
+    width:auto;
+}
+
 nav{
 	justify-self: end;
 	padding-right: 20px;
@@ -72,18 +77,20 @@ nav li{
 .page-wrapper{
 	width:90%;
 	min-width: 420px;
+	max-width: 1111px;
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom: 20px;
 	background-color: #fff;
 	border: 3px solid #4682b4;
+	border-radius: 4px;
 }
 
 .page-view{
 	padding: 10px;
 	display: grid;
-	grid-template-columns: 200px auto;
-	grid-template-rows: 40px 160px auto 50px;
+	grid-template-columns: 200px 200px 200px auto;
+	grid-template-rows: 40px 40px 40px 69px auto;
 	grid-column-gap: 20px;
 	grid-row-gap: 5px;
 }
@@ -94,14 +101,14 @@ nav li{
 .edit-page{
 	padding: 10px;
 	display: grid;
-	grid-template-columns: 200px auto;
-	grid-template-rows: 40px 150px auto 90px;
+	grid-template-columns: 200px 200px 200px auto;
+	grid-template-rows: 40px 40px 40px 40px auto;
 	grid-column-gap: 20px;
 	grid-row-gap: 5px;
 }
 
 .page-image{
-	grid-area: 1 / 1 / 2 / 3
+	grid-area: 1 / 1 / 2 / 2
 }
 
 .page-image img{
@@ -122,7 +129,7 @@ nav li{
 }
 
 .page-title{
-	grid-area: 1 / 2 / 3 / 3
+	grid-area: 1 / 2 / 2 / 5
 }
 
 .page-title h2 {
@@ -133,7 +140,7 @@ nav li{
 .page-title-enter{
 	padding-left: 70px;
 	margin: 3px 0 5px 0;
-	grid-area: 1 / 2 / 3 / 3
+	grid-area: 1 / 2 / 2 / 5
 }
 
 .page-title-enter input{
@@ -143,7 +150,7 @@ nav li{
 
 .page-description{
 	padding-top: 5px;
-	grid-area: 2 / 2 / 3 / 3
+	grid-area: 4 / 2 / 6 / 5
 }
 
 .page-description h4 {
@@ -154,7 +161,7 @@ nav li{
 .page-description-enter{
 	padding-left: 70px;
 	margin: 3px 0 5px 0;
-	grid-area: 2 / 2 / 3 / 3
+	grid-area: 4 / 2 / 6 / 5
 }
 
 .page-description-enter input{
@@ -166,19 +173,38 @@ nav li{
 		margin: 5px 0 30px 0;
 }
 
+.page-music{
+	grid-area: 5 / 1 / 6 / 2
+}
+
+.page-tab{
+  color: #444;
+  cursor: pointer;
+  padding: 11px 0px 11px 0px;
+  width: 150px;
+  border: none;
+  text-align: center;
+  outline: none;
+  font-size: 15px;
+	transition:0.2s;
+}
+
+.page-tab:hover{
+	 	background-color: #c9e9f6;
+}
 
 /* divs for posts */
 .posts-wrapper {
 	background:#fff;
 	width:90%;
 	min-width: 420px;
-	max-width: 999px;
+	max-width: 1111px;
 	text-align:left;
 	margin-left:auto;
 	margin-right:auto;
 	padding-top: 0px;
-	border:1px solid #e3e4e0;
-	border-radius: 3px;
+	border: 3px solid #4682b4;
+	border-radius: 4px;
 	}
 
 .posts-header{

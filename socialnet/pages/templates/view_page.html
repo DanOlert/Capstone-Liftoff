@@ -9,6 +9,18 @@
     <div class="page-title"><h2>{{page.title}}</h2></div>
     <div class= "page-image"><img src="/media/{{page.photo}}" alt="User Picture" height="200" width="200"></div>
     <div class="page-description"><p>{{page.description}}</p></div>
+    <div class="page-music">
+      {% if page.featured %}
+        <h3>Featured</h3>
+        <p></p>
+        {% autoescape off %}
+          {{page.featured|safe}}
+        {% endautoescape %}
+      {% endif %}
+    </div>
+  </div>
+  <div style="padding: 0px 10px 0px 10px; margin: 0;">
+    <a href="{% url 'user:view' slug=page.slug %}projects/"><button class="page-tab">Projects</button></a>
   </div>
 </div>
 
@@ -16,37 +28,49 @@
 
 <div class="posts-wrapper">
   <div class="posts-header">
-    <h1 >Posts</h1>
+    <h1>Posts</h1>
     <div class='post-divide'></div>
   </div>
-  <!-- NOTE we dont require authentication for viewing posts except for private posts {% if user.is_authenticated %} -->
-    <div class="newpost">
-      <button class="collapsible-toggle">Post to {{page.title}}...</button>
-      <div class="newpost-collapsible">
-        <!-- TODO format this as a grid -->
-        <form class='site-form' action='/user/{{page.slug}}/' method='post' enctype='multipart/form-data'>
-          {% csrf_token %}
-          {{ form }} <!-- TODO get this css grid formatted-->
-          <div class="form-submit" style="margin-left: 0px; border-top: none;">
-            <input type='submit' value='Post'>
-          </div>
-        </form>
-      </div>
-      <div class='post-divide'></div>
+  <div class="newpost">
+    {% if user.is_authenticated %}
+    <button class="collapsible-toggle">New Post...</button>
+    <div class="newpost-collapsible">
+      <!-- TODO format this as a grid -->
+      <form class='site-form' action='/posts/' method='post' enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{ form }} <!-- TODO get this formatted omb-->
+        <div class="form-submit" style="margin-left: 0px; border-top: none;">
+          <input type='submit' value='Post'>
+        </div>
+      </form>
     </div>
-    <!-- {% endif %} -->
+    {% else %}
+    <p style="color: #b0c4de"><a href="/user/login/" method='post'>Login</a> or <a href="/user/signup/" method='post'>Register</a> to Create New Post</p>
+    {% endif %}
+    <div class='post-divide'></div>
+  </div>
+  
     {% if posts %} <!-- Are there any posts?-->
       {% for post in posts %}
         <div class="post">
           <!-- dynamically formats the anchor url to be the post's "slug"-->
           <h3><a class="post-title" href="{% url 'posts:detail' slug=post.slug %}">{{post.title}}</a></h3>
-            {% if post.body|length < 111 %}
+            {% if post.body|length < 222 %}
               <p>{{post.body}}</p>
+            <!-- TODO try making a long post expandable using javascript-->
             {% else %}
             <!-- TODO make elipses grey -->
             <!-- TODO if possible, clicking on elipses should expand post in page -->
               <p>{{post.snippet}}<a href="#">  . . . </a></p>
             {%endif%}
+            {% if post.featured %}
+              </p>
+              <p>
+              {% autoescape off %}
+                {{post.featured|safe}}
+              {% endautoescape %}
+            {% endif %}
+            </p>
             <p class="post-info">Posted by <a class="footnote-link" href="{% url 'user:view' slug=post.authorslug %}">{{post.author}}</a>
               {% if post.page %}
               <!--TODO once groups are added make this href detect whether its a user or group-->

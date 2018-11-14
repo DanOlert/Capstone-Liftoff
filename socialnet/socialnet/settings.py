@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'user',
     'apis',
     'pages',
+    'project',
 ]
 
 MIDDLEWARE = [

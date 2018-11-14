@@ -11,6 +11,7 @@ class NewPost(forms.ModelForm):
             'title',
             'type',
             'body',
+            'musicembed',
             'type',
             'privacy',
             ]

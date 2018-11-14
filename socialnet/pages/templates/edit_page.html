@@ -1,6 +1,10 @@
 {% extends 'base_layout.html'%}
 
 {% block content%}
+
+{% load static from staticfiles %}
+<!-- TODO get rid of staticfiles and script at bottom if i dont use it -->
+
 {{ form.errors }}
 <div class="page-wrapper">
   <form class='site-form' action='/user/edit-my-page/' method='post' enctype='multipart/form-data'>
@@ -24,6 +28,9 @@
           Change Image: {{ form.photo }}
         </div>
       </div>
+      <div class="page-music" style="padding-top:40px; height:5px;">
+        <h4 style="display:inline">Current Tune(s):</h4> (Paste Embed Code Below) {{ form.musicembed }}
+      </div>
       <!-- TODO: add javazcript to make the picture show up-->
     </div>
     <div class="form-submit">
@@ -31,5 +38,15 @@
     </div>
   </form>
 </div>
+
+{% if page %}
+<script>
+  //var page = {{page}}; WHY DOESNT THIS WORK?
+  var title = "{{page.title}}";
+alert(title);
+</script>
+<script src="{% static 'edit-page.js'%}"></script>
+
+{% endif %}
 
 {% endblock %}
