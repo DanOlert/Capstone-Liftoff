@@ -12,7 +12,7 @@ Python 3.6.3, Django 2.1 with SQLite (automatically installs), beautifulsoup4 4.
 
 1. Clone this repository: https://github.com/DanOlert/Capstone-Liftoff.git
 2. cd into the folder: socialnet
-3. Install [virtualenv 16.0.0](https://virtualenv.pypa.io/en/latest/installation/). Another preffered vitrual envirnment may be used.
+3. Install [virtualenv 16.0.0](https://virtualenv.pypa.io/en/latest/installation/). Another preferred vitrual envirnment may be used.
 4. Activate your virtual environment with the command: source activate env
 5. Install [Python 3.6.3](https://www.python.org/downloads/)
 6. Install [Django 2.1](https://docs.djangoproject.com/en/2.1/topics/install/#installing-official-release)
