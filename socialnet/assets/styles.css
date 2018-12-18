@@ -37,6 +37,7 @@ a:hover {
 	min-width: 350px;
 	padding-top: 0;
 	height: 80px;
+	z-index:1001;
 	position: fixed;
 	background:#87ceeb;
 	border-bottom: 3px solid #4682b4;
@@ -102,7 +103,7 @@ nav li{
 	padding: 10px;
 	display: grid;
 	grid-template-columns: 200px 200px 200px auto;
-	grid-template-rows: 40px 40px 40px 40px auto;
+	grid-template-rows: 40px 40px auto 130px auto;
 	grid-column-gap: 20px;
 	grid-row-gap: 5px;
 }
@@ -117,19 +118,23 @@ nav li{
 
 .change-image{
 		margin-top: 150px;
-		width: 250px;
-		z-index: 995; position:relative;
+		width: 200px;
+		z-index: 498; position:relative;
 		background: #fff;
 		border: 2px dashed #e3e4e0;
 }
 
 .change-image input{
-		z-index: 997; position:relative;
+		z-index: 499; position:relative;
 		height: auto;
 }
 
 .page-title{
 	grid-area: 1 / 2 / 2 / 5
+}
+
+.page-title-edit{
+	grid-area: 2 / 2 / 3 / 5
 }
 
 .page-title h2 {
@@ -139,12 +144,13 @@ nav li{
 
 .page-title-enter{
 	padding-left: 70px;
+	padding-top: 10px;
 	margin: 3px 0 5px 0;
-	grid-area: 1 / 2 / 2 / 5
+	grid-area: 2 / 2 / 3 / 5
 }
 
 .page-title-enter input{
-	z-index: 1000; position:relative;
+	z-index: 500; position:relative;
 	width: 250px;
 }
 
@@ -153,7 +159,12 @@ nav li{
 	grid-area: 4 / 2 / 6 / 5
 }
 
-.page-description h4 {
+.page-description-edit{
+	padding-top: 5px;
+	grid-area: 3 / 2 / 5 / 5
+}
+
+.page-description-edit h4 {
 	padding: none;
 	margin: 5px 0 5px 0;
 }
@@ -161,12 +172,12 @@ nav li{
 .page-description-enter{
 	padding-left: 70px;
 	margin: 3px 0 5px 0;
-	grid-area: 4 / 2 / 6 / 5
+	grid-area: 3 / 2 / 5 / 5
 }
 
 .page-description-enter input{
 	width: 90%;
-	z-index: 999; position:relative;
+	z-index: 500; position:relative;
 }
 
 .page-description p{
@@ -175,6 +186,22 @@ nav li{
 
 .page-music{
 	grid-area: 5 / 1 / 6 / 2
+}
+
+.user-role{
+	grid-area: 2 / 2 / 3 / 4
+}
+
+.user-genre{
+	grid-area: 3 / 2 / 4 / 4
+}
+
+.user-location{
+	grid-area: 2 / 4 / 3 / 6
+}
+
+.user-availability{
+	grid-area: 3 / 4 / 4 / 6
 }
 
 .page-tab{
@@ -193,8 +220,8 @@ nav li{
 	 	background-color: #c9e9f6;
 }
 
-/* divs for posts */
-.posts-wrapper {
+/* divs for sections */
+.section-wrapper {
 	background:#fff;
 	width:90%;
 	min-width: 420px;
@@ -207,13 +234,14 @@ nav li{
 	border-radius: 4px;
 	}
 
-.posts-header{
+.section-header{
 	text-align: center;
 	padding-left:10px;
 	padding-right:10px;
 	color: #4682b4;
 	}
 
+/* divs for posts */
 .post-title {
 	color: #4682b4;
 	}

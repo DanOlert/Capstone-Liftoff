@@ -3,7 +3,6 @@
 {% block content%}
 
 {% load static from staticfiles %}
-<!-- TODO get rid of staticfiles and script at bottom if i dont use it -->
 
 {{ form.errors }}
 <div class="page-wrapper">
@@ -11,13 +10,13 @@
     {% csrf_token %}
     <!-- TODO: add javazcript to make the text feilds autofill with user's old page info-->
     <div class="edit-page">
-      <div class="page-title">
+      <div class="page-title-edit">
         <h2>Title:</h2>
       </div>
       <div class="page-title-enter">
         {{ form.title }}
       </div>
-      <div class="page-description">
+      <div class="page-description-edit">
         <h4>About:</h4>
       </div>
       <div class="page-description-enter">
@@ -28,7 +27,7 @@
           Change Image: {{ form.photo }}
         </div>
       </div>
-      <div class="page-music" style="padding-top:40px; height:5px;">
+      <div class="page-music" >
         <h4 style="display:inline">Current Tune(s):</h4> (Paste Embed Code Below) {{ form.musicembed }}
       </div>
       <!-- TODO: add javazcript to make the picture show up-->
@@ -41,12 +40,112 @@
 
 {% if page %}
 <script>
-  //var page = {{page}}; WHY DOESNT THIS WORK?
-  var title = "{{page.title}}";
-alert(title);
+  var title = "{{page.title|safe}}";
+  var description = "{{page.description|safe}}"
 </script>
 <script src="{% static 'edit-page.js'%}"></script>
-
 {% endif %}
+
+<div class="section-wrapper">
+  <div class="section-header">
+    <h1>Stats</h1>
+    {{ statsform }}
+    <div class='post-divide'></div>
+
+  </div>
+
+  <div class="ui-widget">
+    <h4>About:</h4>
+    <input id="id_role" size="50">
+  </div>
+<!-- Backup Script incase I fucked up the first one
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+
+    $( "#tags" )
+      // don't navigate away from the field on tab when selecting an item
+      .on( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            availableTags, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      });
+  } );
+  </script>
+</head>
+<body>
+
+<div class="ui-widget">
+  <label for="tags">Tag programming languages: </label>
+  <input id="tags" size="50">
+</div>
+-->
+</div>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'edit-page.js'%}" ></script>
+</head>
+<body>
+
 
 {% endblock %}
