@@ -5,13 +5,14 @@ from django.utils.text import slugify
 from django.db.models import Q
 
 from .models import UserSettings
+from .models import UserStats
 
 from pages.models import Page
 from posts.models import Post
 
 from posts import forms as formsPosts
 from pages import forms as formsPages
-from . import forms
+from . import forms as formsUser
 
 #TODO learn more about decorators in python
 from django.contrib.auth.decorators import login_required
@@ -24,11 +25,15 @@ def signup_view(request):
         if form.is_valid():
             user = form.save() #saves new user and adds sets user variable
             login(request, user)
-#TODO Make settings actually save in database ugh
+#TODO Make sure settings are actually saving
             settings = UserSettings() #saves a persistant settings file for user
             settings.user = request.user
-            settings.title = (request.user.username + "'s Settings")
             settings.save()
+
+            stats = UserStats()
+            stats.user = request.user
+            stats.save()
+
             return redirect('user:edit')
     else:
         form = UserCreationForm()
@@ -59,7 +64,9 @@ def logout_view(request):
 def edit_my_page(request):
     current_user = request.user
     if request.method == 'POST':
+        #TODO figure out how to overwrite post so we dont run into integrity issues
         form = formsPages.EditPage(request.POST) #if file upload, add feild "request.FILES"
+        statsform = formsUser.EditStats(request.POST)
         if form.is_valid:
              instance = form.save(commit=False) #not saving until after a few changes
              instance.owner = current_user
@@ -69,14 +76,13 @@ def edit_my_page(request):
              instance.save()
              return redirect('user:view', slug=str(instance.slug))
     else:
+        form = formsPages.EditPage()
+        statsform = formsUser.EditStats()
         if Page.objects.filter(slug=slugify(current_user.username + "-" + str(current_user.id))).exists():
             page = Page.objects.get(slug=slugify(current_user.username + "-" + str(current_user.id)))
-            form = formsPages.EditPage()
-            return render(request, 'edit_page.html', {'form':form, 'current_user':current_user, 'page':page})
-        else:
-            form = formsPages.EditPage()
+            return render(request, 'edit_page.html', {'form':form, 'statsform':statsform, 'current_user':current_user, 'page':page})
 
-    return render(request, 'edit_page.html', {'form':form, 'current_user':current_user})
+    return render(request, 'edit_page.html', {'form':form, 'statsform':statsform, 'current_user':current_user})
 
 @login_required(login_url="/user/login/")
 def my_page(request):
@@ -107,8 +113,11 @@ def page_view(request, slug):
     return render(request, 'view_page.html', {'page': page, 'posts': posts, 'form':form})
 
 def page_view_projects(request, slug):
+
     if Page.objects.filter(slug=slug).exists():
         page = Page.objects.get(slug=slug)
+        page = Page.objects.get(slug=slug)
+
     else:
         if slug==slugify(request.user.username + "-" + str(request.user.id)):
             return render(request, 'you_have_no_page.html')

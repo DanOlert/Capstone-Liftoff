@@ -1,0 +1,1 @@
+NOTE: The innitial ide of this project has changed. It is no longer focused on user's playlists, but on users projects, as a place to connect musicians.
